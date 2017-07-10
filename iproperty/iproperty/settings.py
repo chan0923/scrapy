@@ -85,4 +85,5 @@ ITEM_PIPELINES = {
 #HTTPCACHE_STORAGE='scrapy.extensions.httpcache.FilesystemCacheStorage'
 
 
-PGSQL_CONN = "dbname='iproperty_scraping' user='db_user' host='localhost' password='P^$wX8q@A'"
+#PGSQL_CONN = "dbname='iproperty_scraping' user='db_user' host='localhost' password='P^$wX8q@A'"
+PGSQL_CONN = "dbname='scrapy_iproperty' user='yeehchan' host='localhost' password='7119cyh2718phl"

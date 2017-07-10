@@ -39,7 +39,7 @@ class PostgreSQLPipeline(object):
         self.cur.close()
 
     def process_item(self, item, spider):
-        try:
+        # try:
             # select from DB
             if item['unique_id'] == '' or item['unique_id'] is None:
                 raise DropItem("unique_id is empty")
@@ -59,9 +59,9 @@ class PostgreSQLPipeline(object):
 
             # update today's price
             self.update_price(listing_id, item)
-        except (Exception, psycopg2.DatabaseError) as error:
-            spider.close_down = True
-            raise error
+        # except (Exception, psycopg2.DatabaseError) as error:
+        #     spider.close_down = True
+        #     raise error
 
     def insert_item(self, item):
         query = """INSERT INTO listing_data (

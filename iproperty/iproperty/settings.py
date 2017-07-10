@@ -61,9 +61,9 @@ NEWSPIDER_MODULE = 'iproperty.spiders'
 
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'iproperty.pipelines.SomePipeline': 300,
-#}
+ITEM_PIPELINES = {
+   'iproperty.pipelines.PostgreSQLPipeline': 300,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See http://doc.scrapy.org/en/latest/topics/autothrottle.html
@@ -83,3 +83,6 @@ NEWSPIDER_MODULE = 'iproperty.spiders'
 #HTTPCACHE_DIR='httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES=[]
 #HTTPCACHE_STORAGE='scrapy.extensions.httpcache.FilesystemCacheStorage'
+
+
+PGSQL_CONN = "dbname='iproperty_scraping' user='db_user' host='localhost' password='P^$wX8q@A'"

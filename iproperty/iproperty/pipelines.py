@@ -1,5 +1,6 @@
 import psycopg2, time, psycopg2.extras
 from scrapy.exceptions import DropItem
+from datetime import datetime
 import logging
 
 # -*- coding: utf-8 -*-
@@ -127,7 +128,7 @@ class PostgreSQLPipeline(object):
             item['builtup'],
             item["occupancy"],
             item["furnishing"],
-            item["posted_date"],
+            datetime.strptime(item["posted_date"], "%d/%m/%Y").strftime("%Y-%m-%d"),
             item["facing_direction"],
             item["facility"],
             item["description"],

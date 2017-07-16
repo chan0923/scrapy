@@ -154,6 +154,73 @@ class PostgreSQLPipeline(object):
             self.cur.execute(query, (row['id'], self.today_str, diff['field'],
                                      diff['old_val'], diff['new_val'],))
 
+        #update main row
+        if len(differences) > 0:
+            query = """UPDATE listing_data
+                        SET
+                            url = %s,
+                            cat_1 = %s,
+                            cat_2 = %s,
+                            cat_3 = %s,
+                            cat_4 = %s,
+                            cat_5 = %s,
+                            cat_6 = %s,
+                            expired = %s,
+                            unique_id = %s,
+                            title = %s,
+                            price = %s,
+                            address = %s,
+                            bedroom = %s,
+                            bathroom = %s,
+                            carpark = %s,
+                            agent_name = %s,
+                            agent_url = %s,
+                            agent_phone = %s,
+                            images = %s,
+                            property_type = %s,
+                            tenure = %s,
+                            land_area = %s,
+                            builtup = %s,
+                            occupancy = %s,
+                            furnishing = %s,
+                            posted_date = %s,
+                            facing_direction = %s,
+                            facility = %s,
+                            description = %s
+                        WHERE id = %s"""
+            self.cur.execute(query, (
+                item["url"],
+                item["cat_1"],
+                item["cat_2"],
+                item["cat_3"],
+                item["cat_4"],
+                item["cat_5"],
+                item["cat_6"],
+                item["expired"],
+                item["unique_id"],
+                item["title"],
+                item["price"],
+                item["address"],
+                item["bedroom"],
+                item["bathroom"],
+                item["carpark"],
+                item["agent_name"],
+                item["agent_url"],
+                item["agent_phone"],
+                item["images"],
+                item["property_type"],
+                item["tenure"],
+                item["land_area"],
+                item['builtup'],
+                item["occupancy"],
+                item["furnishing"],
+                datetime.strptime(item["posted_date"], "%d/%m/%Y").strftime("%Y-%m-%d"),
+                item["facing_direction"],
+                item["facility"],
+                item["description"],
+                row['id']
+            ))
+
     def update_price(self, listing_id, item):
         query = "INSERT INTO price_data (listing_id, date_capture, price) VALUES (%s, %s, %s)"
         self.cur.execute(query, (listing_id, self.today_str, item['price'],))

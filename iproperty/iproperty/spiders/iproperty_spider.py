@@ -5,7 +5,7 @@ from iproperty.items import *
 class ToolsdepotSpider(scrapy.Spider):
     name = 'iproperty'
     allowed_domain = ['www.iproperty.com.my']
-    start_urls = ['https://www.iproperty.com.my/buy/kuala-lumpur/?sby=pdz&page=1', 'https://www.iproperty.com.my/buy/selangor/?sby=pdz&page=1']
+    start_urls = ['https://www.iproperty.com.my/buy/kuala-lumpur/?sby=pdz&page=1&xp=900,000', 'https://www.iproperty.com.my/buy/selangor/?sby=pdz&page=1&xp=900,000']
     base_url = 'https://www.iproperty.com.my'
     close_down = False
 

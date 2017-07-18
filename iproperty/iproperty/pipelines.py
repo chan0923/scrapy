@@ -229,7 +229,7 @@ class PostgreSQLPipeline(object):
         self.cur.execute(query, (listing_id, self.today_str, item['price'],))
 
     def is_identical(self, data1, data2):
-        if str(data1).decode('utf8', 'ignore') == str(data2).decode('utf8', 'ignore'):
+        if unicode(data1) == unicode(data2):
             return True
         elif isinstance(data1, list) and isinstance(data2, list):
             not_in_a = [x for x in data1 if x not in data2]

@@ -40,29 +40,32 @@ class PostgreSQLPipeline(object):
         self.cur.close()
 
     def process_item(self, item, spider):
-        # try:
-            # select from DB
-            if item['unique_id'] == '' or item['unique_id'] is None:
-                raise DropItem("unique_id is empty")
+        insert_price = True
 
-            # clean update data
-            item['builtup'] = item['builtup'].replace(',', '').replace("sq. ft.", "").strip()
+        # select from DB
+        if item['unique_id'] == '' or item['unique_id'] is None:
+            raise DropItem("unique_id is empty")
 
-            # check row existence
-            self.cur.execute("""SELECT * FROM listing_data WHERE unique_id = %s""", (item['unique_id'],))
-            row = self.cur.fetchone()
-            if row is None:
-                listing_id = self.insert_item(item)
+        # clean update data
+        item['builtup'] = item['builtup'].replace(',', '').replace("sq. ft.", "").strip()
+
+        # check row existence
+        self.cur.execute("""SELECT * FROM listing_data WHERE unique_id = %s""", (item['unique_id'],))
+        row = self.cur.fetchone()
+        if row is None:
+            listing_id = self.insert_item(item)
+        else:
+            # check if item is expired
+            if item['expired'] and row['expired']:
+                insert_price = False
             else:
                 # compare changes
                 listing_id = row['id']
                 self.update_changes(row, item)
 
-            # update today's price
+        # update today's price
+        if insert_price:
             self.update_price(listing_id, item)
-        # except (Exception, psycopg2.DatabaseError) as error:
-        #     spider.close_down = True
-        #     raise error
 
     def insert_item(self, item):
         query = """INSERT INTO listing_data (
